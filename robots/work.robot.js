@@ -1,11 +1,8 @@
 var _ = require('../modules/functions.module.js'); // http://robotjs.io/docs/syntax
 
-async function workRobot(screenSize) {
+async function workRobot(positions) {
     var shy = 1;
     var shySum = 0;
-
-    const col = screenSize.width / 48;
-    const row = screenSize.height / 48;
 
     function successOrLose(colorHex) {
         // Red Green Blue
@@ -25,17 +22,20 @@ async function workRobot(screenSize) {
     }
 
     do {
-        _.goToMouse(col * 45, row * 19);
+        _.goToMouse(positions.posValue);
         _.doubleClick();
         await new Promise(done => setTimeout(done, 100));
         _.tapKeyboard(shy);
         await new Promise(done => setTimeout(done, 100));
-        _.clickMouse(col * 45, row * 30);
+        _.clickMouse(positions.buttonUp);
 
-        var rowLoop = 15;
+        var rowLoop = 1;
         var endLine = 0;
         do {
-            _.goToMouse(col * 32, row * rowLoop);
+            let scan = positions.topResponse;
+            const diffScan = positions.topResponse - positions.bottomResponse;
+
+            _.goToMouse(scan.x + (diffScan.x / rowLoop), scan.y + (diffScan.y / rowLoop));
 
             const corrent = successOrLose(
                 _.getColorMousePosition()
@@ -79,10 +79,10 @@ async function workRobot(screenSize) {
 
             if (endLine == 20) break;
 
-            if (rowLoop > 40) {
-                rowLoop = rowLoop = 15;
+            if (rowLoop > 100) {
+                rowLoop = 1;
                 endLine++;
-                await new Promise(done => setTimeout(done, 4000));
+                await new Promise(done => setTimeout(done, 5000));
             } else {
                 rowLoop++;
             }
