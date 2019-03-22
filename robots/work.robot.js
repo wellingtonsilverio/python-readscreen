@@ -1,4 +1,4 @@
-var robotjs = require('robotjs'); // http://robotjs.io/docs/syntax
+var _ = require('../modules/functions.module.js'); // http://robotjs.io/docs/syntax
 
 async function workRobot(screenSize) {
     var shy = 1;
@@ -25,39 +25,39 @@ async function workRobot(screenSize) {
     }
 
     do {
-        goToMouse(col * 45, row * 19);
-        doubleClick();
+        _.goToMouse(col * 45, row * 19);
+        _.doubleClick();
         await new Promise(done => setTimeout(done, 100));
-        tapKeyboard(shy);
+        _.tapKeyboard(shy);
         await new Promise(done => setTimeout(done, 100));
-        clickMouse(col * 45, row * 30);
+        _.clickMouse(col * 45, row * 30);
 
         var rowLoop = 15;
         var endLine = 0;
         do {
-            goToMouse(col * 32, row * rowLoop);
+            _.goToMouse(col * 32, row * rowLoop);
 
             const corrent = successOrLose(
-                getColorMousePosition()
+                _.getColorMousePosition()
                     .toString()
             );
 
             if (corrent != 0) {
-                var mouse = robotjs.getMousePos();
+                var mouse = _.getMousePosition();
                 const correntPosY = successOrLose(
-                    getColorMousePosition(mouse.x, mouse.y + 3)
+                    _.getColorMousePosition(mouse.x, mouse.y + 3)
                         .toString()
                 );
                 const correntPreY = successOrLose(
-                    getColorMousePosition(mouse.x, mouse.y - 3)
+                    _.getColorMousePosition(mouse.x, mouse.y - 3)
                         .toString()
                 );
                 const correntPosX = successOrLose(
-                    getColorMousePosition(mouse.x + 4, mouse.y)
+                    _.getColorMousePosition(mouse.x + 4, mouse.y)
                         .toString()
                 );
                 const correntPreX = successOrLose(
-                    getColorMousePosition(mouse.x - 4, mouse.y)
+                    _.getColorMousePosition(mouse.x - 4, mouse.y)
                         .toString()
                 );
 
@@ -91,7 +91,7 @@ async function workRobot(screenSize) {
 
         await new Promise(done => setTimeout(done, 1000));
 
-        clickMouse(col * 45, row * 30);
+        _.clickMouse(col * 45, row * 30);
 
         await new Promise(done => setTimeout(done, 2000));
 

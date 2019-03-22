@@ -5,9 +5,11 @@ const robots = {
 }
 
 // Pedir possições
-const positions = robots.init();
-// Trabalhar
-// robots.work(positions);
+robots.init()
+    .then((positions) => {
+        // Trabalhar
+        robots.work(positions);
+    });
 
 // testrobo@roboiq.com
 // TesteRobo01

@@ -1,9 +1,7 @@
-var robotjs = require('robotjs'); // http://robotjs.io/docs/syntax
+var _ = require('../modules/functions.module.js');
 
 async function initRobot() {
-
-    return getScreenSize();
-
+    return _.getScreenSize();
 }
 
 module.exports = initRobot;

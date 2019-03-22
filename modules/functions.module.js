@@ -1,10 +1,16 @@
+var robotjs = require('robotjs'); // http://robotjs.io/docs/syntax
+
 function getScreenSize() {
     return robotjs.getScreenSize();
 }
 
+function getMousePosition() {
+    return robotjs.getMousePos();
+}
+
 function getColorMousePosition(x = null, y = null) {
     if (x && y) goToMouse(x, y);
-    var mouse = robotjs.getMousePos();
+    var mouse = getMousePosition();
     return robotjs.getPixelColor(mouse.x, mouse.y);
 }
 
@@ -31,3 +37,5 @@ function tapKeyboardAndEnter(string) {
     tapKeyboard(string);
     robotjs.keyTap("enter");
 }
+
+module.exports = { getScreenSize, getColorMousePosition, clickMouse, doubleClick, tapKeyboardAndEnter, getMousePosition, goToMouse, tapKeyboard };
